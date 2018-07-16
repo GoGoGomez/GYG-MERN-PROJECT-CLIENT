@@ -1,0 +1,43 @@
+
+.Header {
+    text-align: center;
+    line-height: 5vh;
+    background-color: var(--yellow-color);
+    position: fixed;
+    overflow: hidden;
+    top: 0;
+    width: 100%;
+}
+
+.Header-links > * {
+    margin-left: 3rem;
+    vertical-align: middle;
+    text-decoration: none;
+    color: black;
+    transition: 0.4s;
+}
+
+
+.Header-title {
+    margin-left: 3rem;
+    vertical-align: middle;
+    text-decoration: none;
+    color: black;
+    transition: 0.4s;
+    font-size: 1.5rem;
+    font-weight: 700;
+    float: left;
+
+}
+
+.Header-links > *:hover  {
+    margin-left: 3rem;
+    vertical-align: middle;
+    text-decoration: none;
+    color: white;
+}
+
+.is-active {
+    color: white;
+
+}

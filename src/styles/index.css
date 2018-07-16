@@ -1,0 +1,10 @@
+body{
+  margin: 0;
+  font-family: 'Abadi', sans-serif;
+  background-color: black;
+  color: white;
+
+  /* height: 80vh; */
+  /* background: url("../images/home-background.jpg") no-repeat center fixed;
+  background-size: cover; */
+}

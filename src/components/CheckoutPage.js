@@ -1,7 +1,7 @@
 import React from 'react';
 
 const CheckoutPage = () => (
-  <div>
+  <div className="CheckoutPage">
     <h1>Checkout Page</h1>
   </div>
 );
