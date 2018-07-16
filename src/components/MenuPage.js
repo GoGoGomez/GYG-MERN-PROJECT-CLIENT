@@ -1,7 +1,7 @@
 import React from 'react';
 
 const MenuPage = () => (
-  <div>
+  <div className="MenuPage">
     <h1>MenuPage</h1>
   </div>
 );

@@ -1,0 +1,13 @@
+@import 'index.css';
+
+@import './components/header.css';
+@import './components/home-page.css';
+@import './components/menu-page.css';
+@import './components/checkout-page.css';
+
+
+
+:root {
+    --yellow-color: #F8D315;
+    --dark-grey: #5C5C5C;
+}

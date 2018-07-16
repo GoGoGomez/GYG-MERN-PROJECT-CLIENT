@@ -1,0 +1,29 @@
+.Homepage-background {
+    height: 100vh;
+    background: url("../../images/home-background.jpg") no-repeat center fixed;
+    background-size: cover;
+}
+
+.Homepage {
+    text-align: center;
+    position: fixed;
+    background-color: var(--yellow-color);
+    margin: 17% 25%;
+    /* margin: auto; */
+    /* width: 300px; */
+    padding: 5em;
+    border-radius: 4em;
+    border: solid black  3px;
+    color: black;
+    opacity: 
+}
+
+.MenuButton {
+    background-color: white;
+    color: black; 
+    border: 2px solid black;
+    /* border-radius: 15px; */
+    padding: 10px;
+    text-decoration: none;
+    
+}
