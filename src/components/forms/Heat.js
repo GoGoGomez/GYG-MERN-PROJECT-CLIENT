@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 
 class Heat extends Component {
-    state = {
-        heat: ''
-    }
 
+    constructor(props) {
+        super(props)
+        this.setHeat = props.setHeat
+    }
+    
 
 
     handleChange = (event) => {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-    
-        this.setState({
-            [name]: value
-        });
+        // console.log(event.target.value)
+        this.setHeat(event.target.value)
+        // this.setState({
+        //     [name]: value
+        // });
     }
 
     render () {
@@ -30,7 +33,7 @@ class Heat extends Component {
                                 name="test"
                                 onChange={this.handleChange}
                                 value="Mild"
-                                checked={this.state.test === 'Mild'}
+                                // checked={this.state.test === 'Mild'}
                             />
                         Mild
                         </label>
@@ -40,7 +43,7 @@ class Heat extends Component {
                                 name="test"
                                 onChange={this.handleChange}
                                 value="Medium"
-                                checked={this.state.test === 'Medium'}
+                                // checked={this.state.test === 'Medium'}
                         />
                         Medium
                         </label>
@@ -50,7 +53,7 @@ class Heat extends Component {
                                 name="test"
                                 onChange={this.handleChange}
                                 value="Spicy"
-                                checked={this.state.test === 'Spicy'}
+                                // checked={this.state.test === 'Spicy'}
                         />
                         Spicy
                         </label>
