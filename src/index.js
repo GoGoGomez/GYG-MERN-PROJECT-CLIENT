@@ -2,6 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import AppRouter from './routers/AppRouter';
 import './styles/styles.css'
+import store from './store'
 
-ReactDOM.render(<AppRouter />, document.getElementById('root'));
 
+const render = () => ReactDOM.render(<AppRouter />, document.getElementById('root'));
+// registerServiceWorker();
+
+store.subscribe(render);
+render()

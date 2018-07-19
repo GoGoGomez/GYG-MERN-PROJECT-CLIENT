@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import ReactModal from 'react-modal';
 
-import Item from '../components/Item'
+import Item from './Item'
 import api from '../api/init'
+import Heat from './forms/Heat'
+import Loading from './Loading'
+import store from '../store'
 
 
 ReactModal.setAppElement('#root')
 
 class MenuPage extends Component {
   state = {
-    items: [],
+    // items: [],
     showModal: false,
-    itemid: 0
+    itemid: 0,
+    loading: false,
+    heat: ''
   }
 
   openModal = () => {
@@ -29,10 +34,25 @@ class MenuPage extends Component {
     this.setState({ showModal: false });
   }
 
+  handleSubmit = event => {
+    console.log('Form value: ' + this.state.heat);
+    event.preventDefault();
+  }
+
   renderModal = () => {
     if (!this.state.showModal) return ''
-    const item = this.state.items[this.state.itemid]
-    return <h3>{item.title}</h3>
+    const item = store.getState().items[this.state.itemid]
+    return (
+      <div className="ModalItem">
+        <h3>{item.title}</h3>
+        <form onSubmit={this.handleSubmit}>
+          <Heat />
+          <input type="submit" value="Submit"/>
+
+        </form>
+
+      </div>
+    )
     // switch (this.state.itemid) {
     //   case 'item1':
     //     return (
@@ -44,9 +64,10 @@ class MenuPage extends Component {
   
 
   render () {
-    return (
+      {if (this.state.loading) {return <Loading />}}
+      return (
       <div className="MenuPage">
-            {this.state.items.map((item, i) => 
+            {store.getState().items.map((item, i) => 
               (
                 <button onClick={() => this.handleOpenModal(i)}>
                   <Item 
@@ -59,7 +80,7 @@ class MenuPage extends Component {
                     key={item._id}
                     id={item.category}
                   />
-                </button>  
+                </button>
               )
             )}
         <ReactModal 
@@ -70,11 +91,12 @@ class MenuPage extends Component {
         {this.renderModal()}
         </ReactModal>
       </div>
-    )
+        )
   }
 
   componentDidMount() {
     this.fetchItems()
+    this.setState({loading: true})
     console.log(this.state.items)
   }
   
@@ -82,7 +104,12 @@ class MenuPage extends Component {
     try {
       const items = await api.get('/api/menu')
       this.setState({
-        items: items.data
+      //   items: items.data,
+        loading: false
+      })
+      store.dispatch({
+        type: 'set_items',
+        items: items.data,
       })
     } catch (error) {
       alert('Can\'t get items!')
