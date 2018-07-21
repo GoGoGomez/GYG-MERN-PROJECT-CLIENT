@@ -1,23 +1,28 @@
 import React, { Component } from 'react';
 import ReactModal from 'react-modal';
-
 import Item from './Item'
 import api from '../api/init'
-import Heat from './forms/Heat'
 import Loading from './Loading'
 import store from '../store'
+
+//Form Components
+import Heat from './forms/Heat'
+import Filling from './forms/Filling'
+
 
 
 ReactModal.setAppElement('#root')
 
 class MenuPage extends Component {
   state = {
+    test: 0,
     items: [],
     showModal: false,
     itemid: 0,
     loading: false,
-    heat: '',
-    orderItem: { }
+    orderItem: { 
+      
+    }
   }
 
 
@@ -30,6 +35,16 @@ class MenuPage extends Component {
   handleOpenModal = (itemid) => {
     console.log(itemid)
     this.setState({ showModal: true, itemid: itemid });
+    const item = this.state.items[itemid]
+    let orderItemId = store.getState().order.length + 1
+    const orderItem = {
+      id: orderItemId,
+      item: item.title,
+      price: item.price,
+      totalPrice: item.price,
+      name: ''
+    }
+    this.setState({ orderItem: orderItem })
   }
   
   handleCloseModal = () => {
@@ -37,8 +52,6 @@ class MenuPage extends Component {
   }
 
   handleSubmit = event => {
-
-    console.log('Form value: ' + this.state.heat);
     event.preventDefault();
     store.dispatch({
       type: 'set_order_item',
@@ -49,31 +62,31 @@ class MenuPage extends Component {
     console.log(store.getState().order)
   }
 
+  closeModal = () => {
+    this.setState({ showModal: false })
+  }
+
   renderModal = () => {
     if (!this.state.showModal) return ''
     const item = this.state.items[this.state.itemid]
     let orderItemId = store.getState().order.length + 1
-    this.state.orderItem = {
-      id: orderItemId,
-      item: item.title,
-      price: item.price
-    }
-    //let orderItem = new OrderItem({id=orderItemId});
     
     return (
       <div className="ModalItem">
         <img src={item.imagePath} />
         <h1>{item.title}</h1>
         <h3>{item.description}</h3>
-        <h3>Price: ${item.price}</h3>
+        <h3>Price: ${this.state.orderItem.totalPrice}</h3>
         <form onSubmit={this.handleSubmit}>
-        { item.heat && <Heat setHeat={this.setHeatForItem}/> }
+        { item.filling && <Filling setFilling={this.setFillingForItem} /> }
+        { item.heat && <Heat setHeat={this.setHeatForItem} /> }
 
         <input type="submit" value="Submit"/>
         </form>
+        <button onClick={this.closeModal}>Close</button>
       </div>
     )
-    // switch (this.state.itemid) {
+    // switch (item.name) {
     //   case 'item1':
     //     return (
     //       <p>ian</p>
@@ -81,9 +94,28 @@ class MenuPage extends Component {
     //     break;
     // }
   }
+  
   setHeatForItem = (heat) => {
-    this.state.orderItem.heat=heat
-    console.log(this.state.orderItem)
+    const orderItem = {...this.state.orderItem}
+    orderItem.heat=heat
+    this.setState({ orderItem })
+    console.log(orderItem)
+  }
+
+  setFillingForItem = async (filling) => {
+    const orderItem = {...this.state.orderItem}
+    orderItem.filling = filling
+ 
+    if(filling.length > 1) {
+      orderItem.totalPrice = orderItem.price + (3 * (filling.length - 1))
+    } else {
+      orderItem.totalPrice = orderItem.price
+    }
+
+    if(filling.includes("beef") || filling.includes("steak")) {orderItem.totalPrice += 0.5}
+    console.log('orderItem: ' + JSON.stringify(orderItem))
+
+    await this.setState({ orderItem: orderItem })
   }
 
   render () {
