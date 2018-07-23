@@ -1,6 +1,7 @@
 import React from 'react';
 import store from '../store'
 import styled from "styled-components";
+import UserInfo from './forms/UserInfo'
 
 const Title = styled.h1`
   font-size: 2.5em;
@@ -83,6 +84,8 @@ const CheckoutPage = () => (
       </tr>
     </tbody>
     </Table>
+
+    <UserInfo />
   </div>
 );
 
