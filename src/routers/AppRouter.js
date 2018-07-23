@@ -9,8 +9,8 @@ import Item from '../components/Item'
 
 const AppRouter = () => (
   <BrowserRouter>
-    <div>
-      <Header />
+  <div>
+    <Header />
       <Switch>
         <Route path="/" component={HomePage} exact={true} />
         <Route path="/menu" component={MenuPage} exact={true} />

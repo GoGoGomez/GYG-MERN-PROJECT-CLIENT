@@ -16,14 +16,14 @@ import { Link } from 'react-router-dom'
 //     );
 //   }
 // }
+
 const HomePage = () => (
   <div className="Homepage-background">
     <div className="Homepage">
     <h1>Welcome to Guzman y Gomez Kawana Catering Page</h1><br />
-    <Link to="/menu" className="MenuButton">Start your order</Link>
-    
+      <Link to="/menu" className="MenuButton">Start your order</Link>
     </div>
   </div>
 );
 
-export default HomePage;
+export default HomePage
