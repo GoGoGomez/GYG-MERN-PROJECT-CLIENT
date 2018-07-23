@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header renders correctly 1`] = `
+<header
+  className="Header"
+>
+  <div
+    className="Header-title"
+  >
+    GyG Kawana
+  </div>
+  <div
+    className="Header-links"
+  >
+    <a
+      aria-current="page"
+      className="is-active"
+      href="/"
+      onClick={[Function]}
+      style={Object {}}
+    >
+      Home
+    </a>
+    <a
+      aria-current={null}
+      className={undefined}
+      href="/menu"
+      onClick={[Function]}
+      style={undefined}
+    >
+      Menu
+    </a>
+    <a
+      aria-current={null}
+      className={undefined}
+      href="/checkout"
+      onClick={[Function]}
+      style={undefined}
+    >
+      Checkout
+       
+    </a>
+  </div>
+</header>
+`;
