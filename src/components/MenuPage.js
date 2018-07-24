@@ -46,7 +46,8 @@ class MenuPage extends Component {
     function getSum(total, num) {
       return total + num;
     }
-    orderItem.totalPrice = totalPrice.reduce(getSum)
+    orderItem.price = parseFloat((totalPrice.reduce(getSum)).toFixed(2))
+    orderItem.totalPrice = parseFloat((orderItem.price * orderItem.quantity).toFixed(2))
     await this.setState({ orderItem: orderItem })
     console.log(orderItem)
     console.log(totalPrice)
@@ -70,7 +71,8 @@ class MenuPage extends Component {
       item: item.title,
       price: item.price,
       totalPrice: item.price, 
-      name: ''
+      name: '',
+      quantity: 1
     }
     this.setState({ orderItem: orderItem })
   }
@@ -90,7 +92,7 @@ class MenuPage extends Component {
     this.setState({orderItem: {}, showModal: false })
     console.log(store.getState().order)
   }
-  //Test
+
   addModification = async (modification, price) => {
     const newPrice = this.state.modPrice + price
     await this.setState({ 
@@ -132,7 +134,7 @@ class MenuPage extends Component {
       // await this.setPriceTest(event.target)
        await this.setModifications(this.state.modifications)
   }
-  //Test
+
   setModifications = async (modifications) => {
     const orderItem = {...this.state.orderItem}
     orderItem.modifications = modifications
@@ -151,8 +153,9 @@ class MenuPage extends Component {
         <img src={item.imagePath} />
         <h1>{item.title}</h1>
         <h3>{item.description}</h3>
-        {item.price && <h3>Price: ${(this.state.orderItem.totalPrice).toFixed(2)}</h3>}
+        {item.price && <h3>Price: ${this.state.orderItem.totalPrice.toFixed(2)}</h3>}
         <form onSubmit={this.handleSubmit}>
+        <p>Quantity: <input type="number" min="1" defaultValue="1" name="quantity" onChange={this.handleQuantity}/></p>
         { item.filling && <Filling setFilling={this.setFillingForItem} /> }
         { item.heat && <Heat setHeat={this.setHeatForItem} /> }
         {/* Modifications.map */}
@@ -200,11 +203,27 @@ class MenuPage extends Component {
   }
 
   handleName = async (event) => {
+    event.persist()
     const orderItem = {...this.state.orderItem}
     orderItem.name = event.target.value
     await this.setState({ orderItem: orderItem })
-
   }
+
+  handleQuantity = async (event) => {
+    event.persist()
+    const orderItem = {...this.state.orderItem}
+    orderItem.quantity = parseInt(event.target.value)
+    console.log(parseInt(event.target.value))
+
+    await this.setState({ orderItem })
+    console.log(event.target.value)
+    console.log(this.state.orderItem.quantity)
+    this.handleTotalPrice()
+  }
+  // handleQuantityPrice = () => {
+
+
+  // }
 
   render () {
       {if (this.state.loading) {return <Loading />}}
