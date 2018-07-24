@@ -10,11 +10,6 @@ import Heat from './forms/Heat'
 import Filling from './forms/Filling'
 
 
-
-
-
-
-
 ReactModal.setAppElement('#root')
 
 class MenuPage extends Component {
