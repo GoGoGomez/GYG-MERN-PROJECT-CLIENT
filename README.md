@@ -51,6 +51,8 @@ The client is happy with the proposal however base don feedback for the problem 
 User Stories for App
 --------------------
 
+![1-user-stories.png](./resources/1-user-stories.png)
+
 
 
 
