@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import api from '../../api/init'
+
 
 const Title = styled.h1`
   font-size: 2.5em;
@@ -39,7 +41,35 @@ const Button = styled.button`
   }
 `;
 
+// const fetchErrorMessage = async () => {
+//   try {
+//     const errors = await api.post('/api/checkout')
+//     console.log(errors)
+//     return errors
+//   } catch (err) {
+//     alert('Can\'t get items!')
+//   }
+// }
+
+// const async fetchItems() {
+//   try {
+//     const items = await api.get('/api/menu')
+//     this.setState({
+//       items: items.data,
+//       loading: false
+//     })
+//     // store.dispatch({
+//     //   type: 'set_items',
+//     //   items: items.data,
+//     // })
+//   } catch (error) {
+//     alert('Can\'t get items!')
+//   }
+// }
+
 const userInfo = () => {
+  // const  { firstName, lastName, street, city, postcode, phoneNumber, email } = fetchErrorMessage()
+  
   return <div>
       <Form action="/api/checkout" method="post">
         <section>
@@ -50,7 +80,8 @@ const userInfo = () => {
           <div className="form_group">
             <div>
               <label for="company">Company (optional)</label>
-              <input required id="company" type="text" name="company" />
+              <p>{}</p>
+              <input id="company" type="text" name="company" />
             </div>
 
             <div>

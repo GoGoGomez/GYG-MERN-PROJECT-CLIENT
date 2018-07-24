@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import store from '../store'
 import styled from "styled-components";
 import UserInfo from './forms/UserInfo'
@@ -46,48 +46,58 @@ const Table = styled.table`
   }
 `;
 
-const CheckoutPage = () => (
-  <div className="CheckoutPage">
-    <Title>YOUR ORDER</Title>
-    <Table>
-    <thead>
-      <tr>
-        <th>Item</th>
-        <th>Qty</th>
-        <th>Price</th>
-        <th>Total</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Enchilads(mild)</td>
-        <td><input type="number" min="1" name="quantity"/></td>
-        <td>price</td>
-        <td>15</td>
-        <td><button>Delete</button></td>
-      </tr>
-      {
-        store.getState().order.map(order => (
-          <tr key={order.id}>
-              <td>{order.item}</td>
-              <td><input type="number" min="1" name="quantity"/></td>  
-              <td>{order.price}</td>
-              <td></td>
-              <td><button>Delete</button></td>
-          </tr>
-          ))
-        }
-      <tr>
-        <td colSpan="3">Order Total</td>
-        <td>20.00</td>
-      </tr>
-    </tbody>
-    </Table>
 
-    <UserInfo />
-  </div>
-);
+class CheckoutPage extends Component {
+  render() {
+    return (
+      <div className="CheckoutPage">
+      <Title>YOUR ORDER</Title>
+      <Table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Qty</th>
+          <th>Price</th>
+          <th>Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Enchilads(mild)</td>
+          <td><input type="number" min="1" name="quantity"/></td>
+          <td>price</td>
+          <td>15</td>
+          <td><button>Delete</button></td>
+        </tr>
+        {
+          store.getState().order.map(order => (
+            <tr key={order.id}>
+                <td>{order.item}</td>
+                <td><input type="number" min="1" name="quantity"/></td>  
+                <td>{order.price}</td>
+                <td></td>
+                <td><button>Delete</button></td>
+            </tr>
+            ))
+          }
+        <tr>
+          <td colSpan="3">Order Total</td>
+          <td>20.00</td>
+        </tr>
+      </tbody>
+      </Table>
+  
+      <UserInfo />
+    </div>
+    ) 
+  }
+
+}
+
+// const CheckoutPage = () => (
+ 
+// );
 
 export default CheckoutPage;
 
