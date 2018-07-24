@@ -1,7 +1,6 @@
 import { createStore } from 'redux'
 
 const initialState = {
-    heat: '',
     order: []
 }
 
@@ -14,6 +13,10 @@ const reducer = (state, action) => {
     switch (action.type) {
         case 'set_order_item':
         return {...state, order: action.order}
+        case 'update_item_quantity':
+        return {...state, order: action.update}
+        case 'delete_item':
+        return {...state, order: action.delete}
     default:
         console.log(`Redux reducer: Action ${action.type} does not exist.`)
         return state
