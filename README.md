@@ -74,6 +74,10 @@ Wireframes
 
 ![8-wireframe.png](resources/8-wireframe.png)
 
+Project Plan and EffortEstimation
+---------------------------------
+
+![10-gantt.png](resources/10-gantt.png)
 
 
 
