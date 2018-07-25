@@ -9,7 +9,7 @@ const Header = () => (
     <div className="Header-links">
       <NavLink to="/" activeClassName="is-active" exact={true}>Home</NavLink>
       <NavLink to="/menu" activeClassName="is-active" exact={true}>Menu</NavLink>
-      <NavLink to="/checkout" activeClassName="is-active" exact={true}>Checkout{store.getState().order.length !== 0 && `(${store.getState().order.length})`} </NavLink>
+      <NavLink to="/checkout" activeClassName="is-active" exact={true}>Checkout{store.getState() && store.getState().order.length !== 0 && `(${store.getState().order.length})`} </NavLink>
     </div>
   </header>
 );

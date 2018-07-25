@@ -1,4 +1,6 @@
 import { createStore } from 'redux'
+import { loadState } from './components/LocalStorage'
+
 
 const initialState = {
     order: []
@@ -22,5 +24,8 @@ const reducer = (state, action) => {
         return state
     }
 }
+const persistedState = loadState()
 
-export default createStore(reducer, initialState) 
+
+
+export default createStore(reducer, persistedState) 

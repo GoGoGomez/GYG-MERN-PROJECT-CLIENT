@@ -4,6 +4,9 @@ import Item from './Item'
 import api from '../api/init'
 import Loading from './Loading'
 import store from '../store'
+import styled from "styled-components";
+import { NavLink } from 'react-router-dom';
+
 
 //Form Components
 import Heat from './forms/Heat'
@@ -11,6 +14,22 @@ import Filling from './forms/Filling'
 
 
 ReactModal.setAppElement('#root')
+
+
+const Button = styled.button`
+  border: 0;
+  background: #f8d315;
+  padding: 1rem;
+  color: black;
+  margin: 1rem 0;
+  width: auto;
+  text-transform: uppercase;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+
 
 class MenuPage extends Component {
   state = {
@@ -176,8 +195,8 @@ class MenuPage extends Component {
         {/* { this.state.orderItem.filling && this.state.orderItem.filling.includes("vegetables") && <VeggieMods /> } */}
         <p>Name: <input type="text" onChange={this.handleName}/></p>
         <input type="submit" value="Submit"/>
+        <Button onClick={this.handleCloseModal}>Close</Button>
         </form>
-        <button onClick={this.handleCloseModal}>Close</button>
       </div>
     )
     // switch (item.name) {
@@ -251,7 +270,10 @@ class MenuPage extends Component {
             onRequestClose={this.handleCloseModal}
         >
         {this.renderModal()}
-        </ReactModal>
+        </ReactModal><br />
+          <NavLink to="/checkout" exact={true}><Button>Checkout{store.getState() && store.getState().order.length !== 0 && `(${store.getState().order.length})`}</Button></NavLink>
+        
+
       </div>
         )
   }
