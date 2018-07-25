@@ -59,7 +59,20 @@ Workflow Diagram
 ![2-workflow.png](resources/2-workflow.png)
 
 
+Wireframes
+----------
 
+![3-wireframe.png](resources/3-wireframe.png)
+
+![4-wireframe.png](resources/4-wireframe.png)
+
+![5-wireframe.png](resources/5-wireframe.png)
+
+![6-wireframe.png](resources/6-wireframe.png)
+
+![7-wireframe.png](resources/7-wireframe.png)
+
+![8-wireframe.png](resources/8-wireframe.png)
 
 
 
