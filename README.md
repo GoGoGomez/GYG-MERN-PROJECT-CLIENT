@@ -32,6 +32,7 @@ Record of Interactions with Client
 
 * Alex the client came in for lunch to review the proposal for the website
 * Agreed that the app would be catered towards large clients
+* from his feedback he told us he wanted to be notified whenever a new order would come through either by email or text
 
 Application Design 
 ===================
@@ -73,6 +74,10 @@ Wireframes
 ![7-wireframe.png](resources/7-wireframe.png)
 
 ![8-wireframe.png](resources/8-wireframe.png)
+
+ERD 
+---------------------------------
+![9-erd.png](resources/9-erd.png)
 
 Project Plan and EffortEstimation
 ---------------------------------
