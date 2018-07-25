@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import api from '../../api/init'
 
 
 const Title = styled.h1`
@@ -41,37 +40,11 @@ const Button = styled.button`
   }
 `;
 
-// const fetchErrorMessage = async () => {
-//   try {
-//     const errors = await api.post('/api/checkout')
-//     console.log(errors)
-//     return errors
-//   } catch (err) {
-//     alert('Can\'t get items!')
-//   }
-// }
 
-// const async fetchItems() {
-//   try {
-//     const items = await api.get('/api/menu')
-//     this.setState({
-//       items: items.data,
-//       loading: false
-//     })
-//     // store.dispatch({
-//     //   type: 'set_items',
-//     //   items: items.data,
-//     // })
-//   } catch (error) {
-//     alert('Can\'t get items!')
-//   }
-// }
-
-const userInfo = () => {
-  // const  { firstName, lastName, street, city, postcode, phoneNumber, email } = fetchErrorMessage()
+const userInfo = (props) => {
   
   return <div>
-      <Form action="/api/checkout" method="post">
+      <Form onSubmit={props.submit}>
         <section>
           <legend>
             <Title>Delivery Address</Title>
@@ -79,26 +52,25 @@ const userInfo = () => {
           </legend>
           <div className="form_group">
             <div>
-              <label for="company">Company (optional)</label>
-              <p>{}</p>
+              <label htmlFor="company">Company (optional)</label>
               <input id="company" type="text" name="company" />
             </div>
 
             <div>
-              <label for="street">Street</label> <br />
-              <input required id="street" type="text" name="street" />
+              <label htmlFor="street">Street</label> <br />
+              <input id="street" type="text" name="street" />
             </div>
           </div>
 
           <div className="form_group">
             <div>
-              <label for="city">City</label> <br />
-              <input required id="city" type="text" name="city" />
+              <label htmlFor="city">City</label> <br />
+              <input id="city" type="text" name="city" />
             </div>
 
             <div>
-              <label for="postcode">Postcode</label> <br />
-              <input required id="postcode" type="text" name="postcode" />
+              <label htmlFor="postcode">Postcode</label> <br />
+              <input id="postcode" type="text" name="postcode" />
             </div>
           </div>
         </section>
@@ -109,26 +81,26 @@ const userInfo = () => {
           </legend>
           <div className="form_group">
             <div>
-              <label for="firstName">First name*</label> <br />
-              <input required id="firstName" type="text" name="firstName" />
+              <label htmlFor="firstName">First name*</label> <br />
+              <input id="firstName" type="text" name="firstName" />
             </div>
             <div>
-              <label for="email">Email address*</label> <br />
-              <input required id="email" type="text" name="email" />
+              <label htmlFor="email">Email address*</label> <br />
+              <input id="email" type="text" name="email" />
             </div>
           </div>
 
           <div className="form_group">
             <div>
-              <label for="lastName">Last name*</label> <br />
-              <input required id="lastName" type="text" name="lastName" />
+              <label htmlFor="lastName">Last name*</label> <br />
+              <input id="lastName" type="text" name="lastName"  />
             </div>
             <div>
-              <label for="phone">Phone number*</label> <br />
-              <input required id="phone" type="text" name="phone" />
+              <label htmlFor="phone">Phone number*</label> <br />
+              <input id="phoneNumber" type="text" name="phoneNumber" />
             </div>
           </div>
-          <Button type="submit">Submit</Button>
+          <Button>Submit</Button>
         </section>
       </Form>
     </div>;

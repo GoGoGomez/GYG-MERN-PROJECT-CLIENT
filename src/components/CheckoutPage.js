@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import store from '../store'
 import styled from "styled-components";
 import UserInfo from './forms/UserInfo'
+import api from '../api/init'
 
 const Title = styled.h1`
   font-size: 2.5em;
@@ -48,6 +49,38 @@ const Table = styled.table`
 
 
 class CheckoutPage extends Component {
+
+  handleSubmit(event) {
+    event.preventDefault()
+    
+
+    const config = {
+      headers: {
+      'Content-Type': 'application/json',
+      }
+    }
+
+    let data = new FormData(document.querySelector('form'))
+    console.log(data)
+
+    console.log('Posting to API ...')
+    // if (event.keyCode == 13 || ) {
+      api.post('/api/checkout', {
+        firstName: document.querySelector('#firstName').value, 
+        lastName: document.querySelector('#lastName').value, 
+        street: document.querySelector('#street').value, 
+        postcode: document.querySelector('#postcode').value, 
+        email: document.querySelector('#email').value, 
+        phoneNumber: document.querySelector('#phoneNumber').value, 
+        company: document.querySelector('#company').value
+      }, config)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => console.log('Noooo: ', err.response.data))
+    // }
+  }
+
   render() {
     return (
       <div className="CheckoutPage">
@@ -88,7 +121,7 @@ class CheckoutPage extends Component {
       </tbody>
       </Table>
   
-      <UserInfo />
+      <UserInfo onClick={this.clickHandler} submit={this.handleSubmit} />
     </div>
     ) 
   }
