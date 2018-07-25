@@ -42,6 +42,12 @@ const Button = styled.button`
 
 
 const userInfo = (props) => {
+  console.log('running')
+  console.log(props.formErrors)
+
+  const errorMessageStyle = {
+    color: '#cc0000'
+  }
   
   return <div>
       <Form onSubmit={props.submit}>
@@ -53,11 +59,13 @@ const userInfo = (props) => {
           <div className="form_group">
             <div>
               <label htmlFor="company">Company (optional)</label>
+              {/* <p>{}</p> */}
               <input id="company" type="text" name="company" />
             </div>
 
             <div>
               <label htmlFor="street">Street</label> <br />
+              {(props.formErrors.street) ? <span style={errorMessageStyle}>{props.formErrors.street}</span> : ''}
               <input id="street" type="text" name="street" />
             </div>
           </div>
@@ -65,11 +73,13 @@ const userInfo = (props) => {
           <div className="form_group">
             <div>
               <label htmlFor="city">City</label> <br />
+              {(props.formErrors.city) ? <span style={errorMessageStyle}>{props.formErrors.city}</span> : ''}
               <input id="city" type="text" name="city" />
             </div>
 
             <div>
               <label htmlFor="postcode">Postcode</label> <br />
+              {(props.formErrors.postcode) ? <span style={errorMessageStyle}>{props.formErrors.postcode}</span> : ''}
               <input id="postcode" type="text" name="postcode" />
             </div>
           </div>
@@ -82,21 +92,27 @@ const userInfo = (props) => {
           <div className="form_group">
             <div>
               <label htmlFor="firstName">First name*</label> <br />
+              {(props.formErrors.firstName) ? <span style={errorMessageStyle}>{props.formErrors.firstName}</span> : ''}
               <input id="firstName" type="text" name="firstName" />
             </div>
             <div>
-              <label htmlFor="email">Email address*</label> <br />
-              <input id="email" type="text" name="email" />
+              <label htmlFor="lastName">Last name*</label> <br />
+              {(props.formErrors.lastName) ? <span style={errorMessageStyle}>{props.formErrors.lastName}</span> : ''}
+              <input id="lastName" type="text" name="lastName"  />
             </div>
+            
           </div>
 
           <div className="form_group">
             <div>
-              <label htmlFor="lastName">Last name*</label> <br />
-              <input id="lastName" type="text" name="lastName"  />
+              <label htmlFor="email">Email address*</label> <br />
+              {(props.formErrors.email) ? <span style={errorMessageStyle}>{props.formErrors.email}</span> : ''}
+              <input id="email" type="text" name="email" />
             </div>
+           
             <div>
               <label htmlFor="phone">Phone number*</label> <br />
+              {(props.formErrors.phoneNumber) ? <span style={errorMessageStyle}>{props.formErrors.phoneNumber}</span> : ''}
               <input id="phoneNumber" type="text" name="phoneNumber" />
             </div>
           </div>

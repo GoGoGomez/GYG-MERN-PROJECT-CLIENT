@@ -50,22 +50,35 @@ const Table = styled.table`
 
 class CheckoutPage extends Component {
 
+  state = {
+    inputErrors: { 
+      firstName: '', 
+      lastName: '',
+      street: '',
+      postcode: '',
+      email: '',
+      phoneNumber: '',
+      city:''
+      // company: '',
+    }
+  }
+
   handleSubmit(event) {
     event.preventDefault()
     
-
     const config = {
       headers: {
       'Content-Type': 'application/json',
       }
     }
 
-    let data = new FormData(document.querySelector('form'))
-    console.log(data)
+    // let data = new FormData(document.querySelector('form'))
+    // console.log(data)
+    // console.log(this.state.inputErrors)
 
     console.log('Posting to API ...')
     // if (event.keyCode == 13 || ) {
-      api.post('/api/checkout', {
+    api.post('/api/checkout', {
         firstName: document.querySelector('#firstName').value, 
         lastName: document.querySelector('#lastName').value, 
         street: document.querySelector('#street').value, 
@@ -74,12 +87,23 @@ class CheckoutPage extends Component {
         phoneNumber: document.querySelector('#phoneNumber').value, 
         company: document.querySelector('#company').value
       }, config)
-      .then(res => {
-        console.log(res)
+      .then(res => console.log(res))
+      .catch(inputErrors => {
+        this.setState({
+          inputErrors: {
+            firstName: inputErrors.response.data.firstName, 
+            lastName: inputErrors.response.data.lastName, 
+            street: inputErrors.response.data.street, 
+            postcode: inputErrors.response.data.postcode, 
+            email: inputErrors.response.data.email, 
+            phoneNumber: inputErrors.response.data.phoneNumber,  
+            city: inputErrors.response.data.city,  
+            // company: inputErrors.response.data.company
+          }
+        })
+        // this.setState({ inputErrors: { ...inputErrors.response.date } })
       })
-      .catch(err => console.log('Noooo: ', err.response.data))
-    // }
-  }
+  } 
 
   render() {
     return (
@@ -121,7 +145,10 @@ class CheckoutPage extends Component {
       </tbody>
       </Table>
   
-      <UserInfo onClick={this.clickHandler} submit={this.handleSubmit} />
+      <UserInfo
+        onClick={this.clickHandler} 
+        submit={this.handleSubmit.bind(this)}
+        formErrors={this.state.inputErrors} />
     </div>
     ) 
   }
