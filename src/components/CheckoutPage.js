@@ -45,6 +45,21 @@ const Table = styled.table`
     }
   }
 `;
+const Button = styled.button`
+  border: 0;
+  background: #f8d315;
+  padding: 1rem;
+  color: black;
+  margin: 1rem 0;
+  width: auto;
+  float: right;
+  margin-right: 30px;
+  text-transform: uppercase;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
 
 const updateQuantity = (event) => {
   event.persist()
@@ -89,9 +104,15 @@ const getOrderTotal = () => {
   return orderTotal.toFixed(2)
 }
 
+const handleClearOrder = () => {
+  localStorage.removeItem("state")
+  window.history.go(0)
+}
+
 const CheckoutPage = () => (
   <div className="CheckoutPage">
     <Title>YOUR ORDER</Title>
+    <Button onClick={handleClearOrder}>Clear Order</Button>
     <Table>
     <thead>
       <tr>
@@ -108,8 +129,8 @@ const CheckoutPage = () => (
           <tr key={order.id}>
               <td>{order.item}</td>
               <td><input type="number" min="1" defaultValue={order.quantity} id={order.id} onChange={updateQuantity}/></td>  
-              <td>${order.price.toFixed(2)}</td>
-              <td>${order.totalPrice.toFixed(2)}</td>
+              <td>${order.price && order.price.toFixed(2)}</td>
+              <td>${order.totalPrice && order.totalPrice.toFixed(2)}</td>
               <td><button id={order.id} onClick={handleDeleteItem}>Delete</button></td>
           </tr>
           ))

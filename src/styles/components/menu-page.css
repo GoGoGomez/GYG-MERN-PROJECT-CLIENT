@@ -1,9 +1,12 @@
 .MenuPage {
     margin-top: 50px;
+    text-align: center;
+    float: center;
 }
 
 
 .ModalItem {
     color: black;
+    text-align: center;
 
 }
