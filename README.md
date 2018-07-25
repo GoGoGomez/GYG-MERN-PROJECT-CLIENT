@@ -53,6 +53,11 @@ User Stories for App
 
 ![1-user-stories.png](./resources/1-user-stories.png)
 
+Workflow Diagram
+----------------
+
+![2-workflow.png](resources/2-workflow.png)
+
 
 
 
