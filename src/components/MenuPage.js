@@ -216,23 +216,25 @@ class MenuPage extends Component {
     let orderItemId = store.getState().order.length + 1
 
     return <div className="ModalItem">
-        <Img src={item.imagePath} />
+        {item.options.length === 0 && <Img className="ItemImage" src={item.imagePath} /> }
         <h1>{item.title}</h1>
         <h3>{item.description}</h3>
-        {item.price && <h3>
+         <h3>
             PRICE:
             <ItemPrice>
               ${this.state.orderItem.totalPrice.toFixed(2)}
             </ItemPrice>
-          </h3>}
+          </h3>
         <OptionsModal>
           <form onSubmit={this.handleSubmit}>
+            {item.options.length === 0 &&
             <p>
               Quantity: <input type="number" min="1" defaultValue="1" name="quantity" onChange={this.handleQuantity} />
             </p>
+            }
             {item.filling && <Filling setFilling={this.setFillingForItem} />}
             {item.heat && <Heat setHeat={this.setHeatForItem} />}
-            { item.size && <Size setSize={(size) => this.setSizeForItem(size, item.miniPrice, item.price)}/> }
+            {item.size && <Size setSize={(size) => this.setSizeForItem(size, item.miniPrice, item.price)}/> }
             {/* Modifications.map */}
             {item.modifications.length !== 0 && <h4>Customise</h4>}
             <p>
@@ -252,13 +254,47 @@ class MenuPage extends Component {
                 </label>
               ))}
             </p>
+            {item.extras.length !== 0 && <h4>Extras</h4>}
+            <p>
+              {item.extras.map(extra => (
+                <label className="checkbox">
+                  <input
+                    name={extra.name}
+                    price={extra.price}
+                    type="checkbox"
+                    value={extra.name}
+                    checked={this.state.checked}
+                    onChange={e => this.handleChange(e)}
+                  />
+                  {extra.name}{" "}
+                  {extra.price &&
+                    `$${extra.price.toFixed(2)}`}
+                </label>
+              ))}
+            </p>
+            <p className="optionItem">
+            {item.options.map(option => (
+              <div>
+                <img className="OptionImage" src={option.image} />
+                <p>Quantity: <input style={{width: "2em"}} type="number" min="0" defaultValue="0" name="quantity" onChange={(event) => this.handleOptionQuantity(event, option.price, option.name, item.title)} /></p>
+                <h4>{option.name}</h4>
+                <h4>${option.price.toFixed(2)}</h4>
+                <Button type="submit" value="Submit">Add To Order</Button>
+              </div>
+            ))}
+            </p>
+            <br />
+
 
             {/* { this.state.orderItem.filling && this.state.orderItem.filling.includes("vegetables") && <VeggieMods /> } */}
-            <p>
-              Name: <input type="text" onChange={this.handleName} />
-            </p>
-            <Button type="submit" value="Submit">Add To Order</Button>
-            <Button onClick={this.handleCloseModal}>Close</Button>
+            <div className="addToOrder">
+            {item.options.length === 0 && <p>Name: <input type="text" onChange={this.handleName} /></p>}
+            {item.options.length === 0 && <Button type="submit" value="Submit">Add To Order</Button>}
+            
+            
+              <Button onClick={this.handleCloseModal}>Close</Button>
+            
+            </div>
           </form>
         </OptionsModal>
       </div>;
@@ -315,10 +351,44 @@ class MenuPage extends Component {
     console.log(this.state.orderItem.quantity)
     this.handleTotalPrice()
   }
-  // handleQuantityPrice = () => {
+
+  handleOptionQuantity = async (event, itemPrice, itemName, type) => {
+    const orderItem = { ...this.state.orderItem }
+    let quantity = parseInt(event.target.value)
+    let drinks = orderItem.drinks
+    console.log(parseInt(event.target.value))
+    console.log(event.target.value)
+    console.log(itemPrice)
+    console.log(itemName)
+    // if(type === "Drinks") {
+      // if (drinks) {
+      //   if(drinks[itemName]) {
+      //     drinks.itemName.quantity = quantity
+      //   } else {
+      //     drinks = [...drinks, {[itemName]: {price: itemPrice, quantity: event.target.value}}]
+      //   }
+      // } else {
+      //   drinks = [{[itemName]: {price: itemPrice, quantity: event.target.value}}]
+      // }
+      // orderItem.drinks ? orderItem.drinks = [...orderItem.drinks, {[name]: {price: price, quantity: event.target.value}}] :  orderItem.drinks = [{[name]: {price: price, quantity: event.target.value}}]
+      orderItem.price = itemPrice
+      orderItem.item = itemName
+      orderItem.quantity = quantity
+      // orderItem.quantity = quantity
+    // } else if (type === "Sides") {
+    //   orderItem.totalPrice = itemPrice * quantity
+    // }
 
 
-  // }
+    // orderItem.quantity = parseInt(event.target.value)
+    // console.log(parseInt(event.target.value))
+
+    await this.setState({ orderItem })
+    // console.log(event.target.value)
+    // console.log(this.state.orderItem.quantity)
+    this.handleTotalPrice()
+  }
+ 
 
   render() {
     { if (this.state.loading) { return <Loading /> } }

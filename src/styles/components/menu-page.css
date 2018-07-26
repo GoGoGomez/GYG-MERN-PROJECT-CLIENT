@@ -18,3 +18,15 @@
     max-width: 90vw;
     color: red;
 } 
+.optionItem {
+   display: flex;
+   flex-flow: row wrap;
+   justify-content: center;
+}
+
+.addToOrder {
+    /* position: absolute; */
+    /* display: block; */
+    /* position: relative; */
+    /* float: center; */
+}
