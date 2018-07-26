@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import store from '../store'
 import styled from "styled-components";
 import UserInfo from './forms/UserInfo'
+import api from '../api/init'
 
 const Title = styled.h1`
   font-size: 2.5em;
@@ -109,9 +110,68 @@ const handleClearOrder = () => {
   window.history.go(0)
 }
 
-const CheckoutPage = () => (
-  <div className="CheckoutPage">
-    <Title>YOUR ORDER</Title>
+
+class CheckoutPage extends Component {
+
+  state = {
+    inputErrors: { 
+      firstName: '', 
+      lastName: '',
+      street: '',
+      postcode: '',
+      email: '',
+      phoneNumber: '',
+      city:''
+      // company: '',
+    }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    
+    const config = {
+      headers: {
+      'Content-Type': 'application/json',
+      }
+    }
+
+    // let data = new FormData(document.querySelector('form'))
+    // console.log(data)
+    // console.log(this.state.inputErrors)
+
+    console.log('Posting to API ...')
+    // if (event.keyCode == 13 || ) {
+    api.post('/api/checkout', {
+        firstName: document.querySelector('#firstName').value, 
+        lastName: document.querySelector('#lastName').value, 
+        street: document.querySelector('#street').value, 
+        postcode: document.querySelector('#postcode').value, 
+        email: document.querySelector('#email').value, 
+        phoneNumber: document.querySelector('#phoneNumber').value, 
+        company: document.querySelector('#company').value
+      }, config)
+      .then(res => console.log(res))
+      .catch(inputErrors => {
+        this.setState({
+          inputErrors: {
+            firstName: inputErrors.response.data.firstName, 
+            lastName: inputErrors.response.data.lastName, 
+            street: inputErrors.response.data.street, 
+            postcode: inputErrors.response.data.postcode, 
+            email: inputErrors.response.data.email, 
+            phoneNumber: inputErrors.response.data.phoneNumber,  
+            city: inputErrors.response.data.city,  
+            // company: inputErrors.response.data.company
+          }
+        })
+        // this.setState({ inputErrors: { ...inputErrors.response.date } })
+      })
+  } 
+
+  render() {
+    return (
+      <div className="CheckoutPage">
+      <Title>YOUR ORDER</Title>
     <Button onClick={handleClearOrder}>Clear Order</Button>
     <Table>
     <thead>
@@ -141,22 +201,15 @@ const CheckoutPage = () => (
       </tr>
     </tbody>
     </Table>
+  
+      <UserInfo
+        onClick={this.clickHandler} 
+        submit={this.handleSubmit.bind(this)}
+        formErrors={this.state.inputErrors} />
+    </div>
+    ) 
+  }
 
-    <UserInfo />
-  </div>
-);
+}
 
 export default CheckoutPage;
-
-// Enchiladas(Mild) 15
-
-// {
-//   // console.log(store.getState().order, 'this is working')
-//   <ol>
-//     {store.getState().order.map(order => (
-//       <li>
-//         {order.item}({order.heat}) {order.price}{" "}
-//       </li>
-//     ))}
-//   </ol>
-// }

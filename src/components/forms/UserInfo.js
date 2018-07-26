@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+
 const Title = styled.h1`
   font-size: 2.5em;
   text-align: center;
@@ -39,9 +40,17 @@ const Button = styled.button`
   }
 `;
 
-const userInfo = () => {
+
+const userInfo = (props) => {
+  console.log('running')
+  console.log(props.formErrors)
+
+  const errorMessageStyle = {
+    color: '#cc0000'
+  }
+  
   return <div>
-      <Form action="/api/checkout" method="post">
+      <Form onSubmit={props.submit}>
         <section>
           <legend>
             <Title>Delivery Address</Title>
@@ -49,25 +58,29 @@ const userInfo = () => {
           </legend>
           <div className="form_group">
             <div>
-              <label for="company">Company (optional)</label>
-              <input required id="company" type="text" name="company" />
+              <label htmlFor="company">Company (optional)</label>
+              {/* <p>{}</p> */}
+              <input id="company" type="text" name="company" />
             </div>
 
             <div>
-              <label for="street">Street</label> <br />
-              <input required id="street" type="text" name="street" />
+              <label htmlFor="street">Street</label> <br />
+              {(props.formErrors.street) ? <span style={errorMessageStyle}>{props.formErrors.street}</span> : ''}
+              <input id="street" type="text" name="street" />
             </div>
           </div>
 
           <div className="form_group">
             <div>
-              <label for="city">City</label> <br />
-              <input required id="city" type="text" name="city" />
+              <label htmlFor="city">City</label> <br />
+              {(props.formErrors.city) ? <span style={errorMessageStyle}>{props.formErrors.city}</span> : ''}
+              <input id="city" type="text" name="city" />
             </div>
 
             <div>
-              <label for="postcode">Postcode</label> <br />
-              <input required id="postcode" type="text" name="postcode" />
+              <label htmlFor="postcode">Postcode</label> <br />
+              {(props.formErrors.postcode) ? <span style={errorMessageStyle}>{props.formErrors.postcode}</span> : ''}
+              <input id="postcode" type="text" name="postcode" />
             </div>
           </div>
         </section>
@@ -78,26 +91,32 @@ const userInfo = () => {
           </legend>
           <div className="form_group">
             <div>
-              <label for="firstName">First name*</label> <br />
-              <input required id="firstName" type="text" name="firstName" />
+              <label htmlFor="firstName">First name*</label> <br />
+              {(props.formErrors.firstName) ? <span style={errorMessageStyle}>{props.formErrors.firstName}</span> : ''}
+              <input id="firstName" type="text" name="firstName" />
             </div>
             <div>
-              <label for="email">Email address*</label> <br />
-              <input required id="email" type="text" name="email" />
+              <label htmlFor="lastName">Last name*</label> <br />
+              {(props.formErrors.lastName) ? <span style={errorMessageStyle}>{props.formErrors.lastName}</span> : ''}
+              <input id="lastName" type="text" name="lastName"  />
             </div>
+            
           </div>
 
           <div className="form_group">
             <div>
-              <label for="lastName">Last name*</label> <br />
-              <input required id="lastName" type="text" name="lastName" />
+              <label htmlFor="email">Email address*</label> <br />
+              {(props.formErrors.email) ? <span style={errorMessageStyle}>{props.formErrors.email}</span> : ''}
+              <input id="email" type="text" name="email" />
             </div>
+           
             <div>
-              <label for="phone">Phone number*</label> <br />
-              <input required id="phone" type="text" name="phone" />
+              <label htmlFor="phone">Phone number*</label> <br />
+              {(props.formErrors.phoneNumber) ? <span style={errorMessageStyle}>{props.formErrors.phoneNumber}</span> : ''}
+              <input id="phoneNumber" type="text" name="phoneNumber" />
             </div>
           </div>
-          <Button type="submit">Submit</Button>
+          <Button>Submit</Button>
         </section>
       </Form>
     </div>;
