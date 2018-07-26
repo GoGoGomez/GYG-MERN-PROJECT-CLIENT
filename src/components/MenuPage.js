@@ -65,8 +65,8 @@ class MenuPage extends Component {
     function getSum(total, num) {
       return total + num;
     }
-    orderItem.price = parseFloat((totalPrice.reduce(getSum)).toFixed(2))
-    orderItem.totalPrice = parseFloat((orderItem.price * orderItem.quantity).toFixed(2))
+    // orderItem.price = parseFloat((totalPrice.reduce(getSum)).toFixed(2))
+    orderItem.totalPrice = parseFloat((totalPrice.reduce(getSum) * orderItem.quantity).toFixed(2))
     await this.setState({ orderItem: orderItem })
     console.log(orderItem)
     console.log(totalPrice)
@@ -100,15 +100,17 @@ class MenuPage extends Component {
     this.setState({ showModal: false });
   }
 
-  handleSubmit = event => {
-
+  handleSubmit = async event => {
+    const orderItem = {...this.state.orderItem}
+    orderItem.price = orderItem.totalPrice/orderItem.quantity
+    await this.setState({ orderItem: orderItem })
     event.preventDefault();
-    store.dispatch({
+    await store.dispatch({
       type: 'set_order_item',
       order: [...store.getState().order, this.state.orderItem]
     })
     // store.setState().order.push(this.state.orderItem)
-    this.setState({orderItem: {}, showModal: false })
+    await this.setState({orderItem: {}, showModal: false })
     console.log(store.getState().order)
   }
 
@@ -177,6 +179,7 @@ class MenuPage extends Component {
         <p>Quantity: <input type="number" min="1" defaultValue="1" name="quantity" onChange={this.handleQuantity}/></p>
         { item.filling && <Filling setFilling={this.setFillingForItem} /> }
         { item.heat && <Heat setHeat={this.setHeatForItem} /> }
+        { item.size && <p>Hello</p> }
         {/* Modifications.map */}
         {item.modifications.length !== 0 && <h4>Customise</h4>}
         <p>{item.modifications.map(modification => (
