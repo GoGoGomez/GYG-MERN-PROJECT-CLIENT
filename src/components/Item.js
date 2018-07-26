@@ -10,14 +10,13 @@ const Img = styled.img`
     opacity: 1;
     -webkit-transform: scale(1.03);
     -ms-transform: scale(1.03);
-    transform: scale(1.05);
+    transform: scale(1.02);
   }
 `;
 
 const ImgDiv = styled.div`
-  margin: 10px;
   color: black;
-
+  background-color: white;
 `;
 
 const Title = styled.h1`
