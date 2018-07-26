@@ -121,7 +121,8 @@ class CheckoutPage extends Component {
       postcode: '',
       email: '',
       phoneNumber: '',
-      city: ''
+      city: '',
+      userOrders: ''
     }
   }
 
@@ -134,22 +135,8 @@ class CheckoutPage extends Component {
       }
     }
 
-    /*
-    store.getState().order.map(order => (
-          <tr key={order.id}>
-              <td>{order.item}</td>
-              <td><input type="number" min="1" defaultValue={order.quantity} id={order.id} onChange={updateQuantity}/></td>  
-              <td>${order.price && order.price.toFixed(2)}</td>
-              <td>${order.totalPrice && order.totalPrice.toFixed(2)}</td>
-              <td><button id={order.id} onClick={handleDeleteItem}>Delete</button></td>
-          </tr>
-    */
-   let totalCost = 0
-   let userOrders
     const order = store.getState().order.map(orderItem =>  {
-      totalCost += orderItem.price
-
-      userOrders = `
+      let userOrders = `
         <p><strong>Item order</strong>: ${orderItem.id} </p>
         <p><strong>Item</strong>: ${orderItem.item} </p>
         <p><strong>Quanity</strong>: ${orderItem.quantity} </p>
@@ -163,31 +150,29 @@ class CheckoutPage extends Component {
         userOrders += `<p><strong>Heat</strong>: ${orderItem.heat}</p>`
       }
 
-      if (orderItem.filling > 0) {
-        userOrders += `<p><strong>Fillings:</strong></p>`
-        userOrders += '<ul>'
-        orderItem.modifications.forEach((item) => {
-          userOrders += `<li><strong>Size</strong>: ${item}</li>`
-        })
-        userOrders += '</ul>'
-      }
-
-      if (orderItem.modifications.length > 0) {
+      if (orderItem.filling.length > 0) {
+          userOrders += `<p><strong>Fillings:</strong></p>`
+          userOrders += '<ul>'
+          orderItem.modifications.forEach((item) => {
+              userOrders += `<li><strong>Size</strong>: ${item}</li>`
+            })
+            userOrders += '</ul>'
+          }
+          
+          if (orderItem.modifications) {
+            console.log(orderItem.filling)
         userOrders += `<p><strong>Modifications:</strong></p>`
         userOrders += '<ul>'
         orderItem.modifications.forEach((item) => {
-          userOrders += `<li><strong>Size</strong>: ${item}</li>`
+          userOrders += `<li> ${item}</li>`
         })
         userOrders += '</ul>'
+        userOrders += `<h4Total: $${getOrderTotal()}</h4>`
+        return userOrders
       }
     })
 
-    console.log(userOrders)
-    
-
-    // let data = new FormData(document.querySelector('form'))
-    // console.log(data)
-    // console.log(this.state.inputErrors)
+    console.log(order)
 
     console.log('Posting to API ...')
     // if (event.keyCode == 13 || ) {
@@ -200,7 +185,7 @@ class CheckoutPage extends Component {
         phoneNumber: document.querySelector('#phoneNumber').value, 
         company: document.querySelector('#company').value,
         city: document.querySelector('#city').value,
-        getOrders: store.getState().order
+        userOrders: order
       }, config)
       .then(res => console.log(res))
       .catch(inputErrors => {
@@ -214,7 +199,6 @@ class CheckoutPage extends Component {
             phoneNumber: inputErrors.response.data.phoneNumber,  
             city: inputErrors.response.data.city,  
             company: inputErrors.response.data.company, 
-            userOrders
           }
         })
       })
@@ -258,7 +242,6 @@ class CheckoutPage extends Component {
         onClick={this.clickHandler} 
         submit={this.handleSubmit.bind(this)}
         formErrors={this.state.inputErrors}
-        
         userOrders={this.state.getOrders} />
     </div>
     ) 
