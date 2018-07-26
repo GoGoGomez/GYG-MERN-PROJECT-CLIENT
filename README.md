@@ -93,9 +93,10 @@ Ian: Testing, React Router, Styling, Checkout-Page, API integration
 
 Denis: Back-end development, autheniticaiton, passport, email
 
-Work was monitored with trello. It was useful for monitoring tasks
+Work was monitored with trello. It was useful for monitoring tasks and project management
 
 ![11-trello.png](resources/11-trello.png)
+![12-trello.png](resources/12-trello.png)
 
 Monitoring Each Others Work
 ---------------------------
