@@ -134,14 +134,17 @@ Post-Project Review
   * Sometimes merges were made without checking. It’s always important to look at the code before merging into master
 * git push —force: don't do it
 * Communication is key: There is no substitution for talking to team members. At times we ran into problems and attempted to fix it ourselves whichis fine, but if youre having the same problem for an hour or two its best to talk to a team member or anyone around. They can maybe help you. Or simply even talking about it will help you really understand the problem and the soltuion might suddenly come to you
-*
+* Agile works- through conducting agile meetings daily the team was able to come together and appreciate others contributions and if someone was having problems those problems could then be addressed. It helped give us direction for the day because every memeber knew what they were working on for that day. 
+* Working with a client- working with a client has given us insight into what it is like to develop products in the real world. You have to consider the clients needs and wants and set expectations for what will and wont be feasable to do, and when you can deliver something that they can see. You have to have great time management skills because often the client will want something to be delivered by a certain time, and you have to meet that expectation. Often the client might want a certain feature but you have to be realistic and say we cannot have that feature by a certain time. 
 
 ### Project Future
 
+Within the next month we hope to add the following features to the project. We will probably continue to work on it as a team because we are all close and worked together quite well:
 * login capabilities to store and retrieve orders
 * enable user to edit items and delete items
 * enable user to customise modifications
-* enable a secret code for users to enter to reduce their total price
+* enable a secret code for users to enter for their organisation so that can login and see the orders for their business and can add to it
+* enable a discount code for bulk orders 
 
 
 
