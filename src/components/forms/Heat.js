@@ -16,7 +16,6 @@ class Heat extends Component {
     render () {
         return (
             <div className="HeatForm">
-            {/* <form> */}
                 <div className="field">
                     <div className="control">
                         <label className="label"><strong>Heat:</strong></label>
@@ -52,7 +51,6 @@ class Heat extends Component {
                         </label>
                     </div>
                 </div>
-                {/* </form> */}
             </div>
         )
     }
