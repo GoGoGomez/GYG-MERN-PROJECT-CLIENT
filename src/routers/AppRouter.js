@@ -13,9 +13,9 @@ const AppRouter = () => (
     <Header />
       <Switch>
         <Route path="/" component={HomePage} exact={true} />
-        <Route path="/menu" component={MenuPage} exact={true} />
-        <Route path="/menu/:id" component={Item} />
-        <Route path="/checkout" component={CheckoutPage} exact={true} />
+        <Route exact path="/menu" component={MenuPage} />
+        {/* <Route path="/menu/:id" component={Item} /> */}
+        <Route exact path="/checkout" component={CheckoutPage} />
       </Switch>
     </div>
   </BrowserRouter>

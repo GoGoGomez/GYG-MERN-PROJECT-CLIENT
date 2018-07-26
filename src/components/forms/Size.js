@@ -24,12 +24,10 @@ class Size extends Component {
                         <br />
                         <label className="radio">
                             <input type="radio"
-                                // setDefault
                                 // checked
                                 name="size"
                                 onChange={this.handleChange}
                                 value="Regular"
-                                // checked={this.state.test === 'Regular'}
                             />
                         Regular
                         </label>
@@ -37,11 +35,9 @@ class Size extends Component {
                         <label className="radio">
                             <input type="radio"
                                 name="size"
-                                // checked={false}
                                 onChange={this.handleChange}
                                 value="Mini"
-                                // checked={this.state.test === 'Mini'}
-                        />
+                            />
                         Mini
                         </label>
                     </div>
