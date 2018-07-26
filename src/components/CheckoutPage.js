@@ -9,7 +9,6 @@ const Title = styled.h1`
   text-align: center;
   color: #f8d315;
   float: left;
-  font-family: HelveticaNeueLT-BoldCond;
   margin-left: 10px;
   display: block;
 `;
@@ -84,9 +83,12 @@ const updateQuantity = (event) => {
 const handleDeleteItem = (event) => {
   const order = store.getState().order
   const id = event.target.id
+
   order.map(item => {
     if(item.id == id) {
-      order.splice(item, 1)
+      // console.log(item.id)
+      // console.log(id)
+      order.splice((item.id-1), 1)
     }
   })
 
