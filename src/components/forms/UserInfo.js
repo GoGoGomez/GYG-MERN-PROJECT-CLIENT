@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import store from '../../store'
 
 
 const Title = styled.h1`
@@ -42,19 +43,22 @@ const Button = styled.button`
 
 
 const userInfo = (props) => {
-  console.log('running')
   console.log(props.formErrors)
 
   const errorMessageStyle = {
     color: '#cc0000'
   }
-  
+
+  console.log('I am here')
+  console.log(props.userOrders)
+
+
   return <div>
       <Form onSubmit={props.submit}>
+      
         <section>
           <legend>
             <Title>Delivery Address</Title>
-
           </legend>
           <div className="form_group">
             <div>
@@ -100,7 +104,6 @@ const userInfo = (props) => {
               {(props.formErrors.lastName) ? <span style={errorMessageStyle}>{props.formErrors.lastName}</span> : ''}
               <input id="lastName" type="text" name="lastName"  />
             </div>
-            
           </div>
 
           <div className="form_group">

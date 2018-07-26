@@ -46,6 +46,7 @@ const Table = styled.table`
     }
   }
 `;
+
 const Button = styled.button`
   border: 0;
   background: #f8d315;
@@ -60,7 +61,6 @@ const Button = styled.button`
     transform: scale(1.1);
   }
 `;
-
 
 const updateQuantity = (event) => {
   event.persist()
@@ -121,8 +121,7 @@ class CheckoutPage extends Component {
       postcode: '',
       email: '',
       phoneNumber: '',
-      city:''
-      // company: '',
+      city: ''
     }
   }
 
@@ -134,6 +133,57 @@ class CheckoutPage extends Component {
       'Content-Type': 'application/json',
       }
     }
+
+    /*
+    store.getState().order.map(order => (
+          <tr key={order.id}>
+              <td>{order.item}</td>
+              <td><input type="number" min="1" defaultValue={order.quantity} id={order.id} onChange={updateQuantity}/></td>  
+              <td>${order.price && order.price.toFixed(2)}</td>
+              <td>${order.totalPrice && order.totalPrice.toFixed(2)}</td>
+              <td><button id={order.id} onClick={handleDeleteItem}>Delete</button></td>
+          </tr>
+    */
+   let totalCost = 0
+   let userOrders
+    const order = store.getState().order.map(orderItem =>  {
+      totalCost += orderItem.price
+
+      userOrders = `
+        <p><strong>Item order</strong>: ${orderItem.id} </p>
+        <p><strong>Item</strong>: ${orderItem.item} </p>
+        <p><strong>Quanity</strong>: ${orderItem.quantity} </p>
+      `
+
+      if (orderItem.item) {
+        userOrders += `<p><strong>Size</strong>: ${orderItem.size}</p>`
+      }
+
+      if (orderItem.heat) {
+        userOrders += `<p><strong>Heat</strong>: ${orderItem.heat}</p>`
+      }
+
+      if (orderItem.filling > 0) {
+        userOrders += `<p><strong>Fillings:</strong></p>`
+        userOrders += '<ul>'
+        orderItem.modifications.forEach((item) => {
+          userOrders += `<li><strong>Size</strong>: ${item}</li>`
+        })
+        userOrders += '</ul>'
+      }
+
+      if (orderItem.modifications.length > 0) {
+        userOrders += `<p><strong>Modifications:</strong></p>`
+        userOrders += '<ul>'
+        orderItem.modifications.forEach((item) => {
+          userOrders += `<li><strong>Size</strong>: ${item}</li>`
+        })
+        userOrders += '</ul>'
+      }
+    })
+
+    console.log(userOrders)
+    
 
     // let data = new FormData(document.querySelector('form'))
     // console.log(data)
@@ -148,7 +198,9 @@ class CheckoutPage extends Component {
         postcode: document.querySelector('#postcode').value, 
         email: document.querySelector('#email').value, 
         phoneNumber: document.querySelector('#phoneNumber').value, 
-        company: document.querySelector('#company').value
+        company: document.querySelector('#company').value,
+        city: document.querySelector('#city').value,
+        getOrders: store.getState().order
       }, config)
       .then(res => console.log(res))
       .catch(inputErrors => {
@@ -161,10 +213,10 @@ class CheckoutPage extends Component {
             email: inputErrors.response.data.email, 
             phoneNumber: inputErrors.response.data.phoneNumber,  
             city: inputErrors.response.data.city,  
-            // company: inputErrors.response.data.company
+            company: inputErrors.response.data.company, 
+            userOrders
           }
         })
-        // this.setState({ inputErrors: { ...inputErrors.response.date } })
       })
   } 
 
@@ -205,11 +257,12 @@ class CheckoutPage extends Component {
       <UserInfo
         onClick={this.clickHandler} 
         submit={this.handleSubmit.bind(this)}
-        formErrors={this.state.inputErrors} />
+        formErrors={this.state.inputErrors}
+        
+        userOrders={this.state.getOrders} />
     </div>
     ) 
   }
-
 }
 
 export default CheckoutPage;
