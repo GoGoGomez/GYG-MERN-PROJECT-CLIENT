@@ -139,8 +139,10 @@ class CheckoutPage extends Component {
 
     console.log(store.getState().order)
 
-    let userOrders = ``
+    const userOrderArray = []
+
     const order = store.getState().order.map((orderItem, index) => {
+      let userOrders = ``
       if (orderItem.name) {
         userOrders += `<p><strong>Customer name</strong>: ${orderItem.name}</p>`
       }
@@ -161,17 +163,31 @@ class CheckoutPage extends Component {
         `
       }
 
-      if (orderItem.modifications.length > 0) {
-        console.log('ther are fillings')
-        userOrders += `
-          <p><strong>Fillings</strong>: ${orderItem.modifications.join(', ')}</p>
-          `
+      if (orderItem.modifications) {
+        if (orderItem.modifications.length > 0) {
+          console.log('ther are fillings')
+          userOrders += `
+            <p><strong>Fillings</strong>: ${orderItem.modifications.join(', ')}</p>
+            `
+        }
       }
 
-      userOrders += `<p><strong>Total price</strong>: $${getOrderTotal()} </p>`
-      
+      if (orderItem.filling) {
+        if (orderItem.filling.length > 0) {
+          console.log('ther are fillings')
+          userOrders += `
+            <p><strong>Fillings</strong>: ${orderItem.filling.join(', ')}</p>
+            `
+        }
+      }
+      userOrderArray.push(userOrders)
       return userOrders
     })
+    userOrderArray.push(`<p><strong>Total price</strong>: $${getOrderTotal()} </p>`)
+
+    const finalOrder = userOrderArray.toString()
+    console.log(finalOrder)
+
     
 
     console.log('Posting to API ...')
@@ -185,7 +201,7 @@ class CheckoutPage extends Component {
         phoneNumber: document.querySelector('#phoneNumber').value, 
         company: document.querySelector('#company').value,
         city: document.querySelector('#city').value,
-        userOrders: order
+        userOrders: finalOrder
       }, config)
       .then(res => console.log(res))
       .catch(inputErrors => {

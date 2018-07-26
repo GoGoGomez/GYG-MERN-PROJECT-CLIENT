@@ -116,12 +116,6 @@ const userInfo = (props) => {
               {(props.formErrors.phoneNumber) ? <span style={errorMessageStyle}>{props.formErrors.phoneNumber}</span> : ''}
               <input id="phoneNumber" type="text" name="phoneNumber" />
             </div>
-
-            <div>
-              <label htmlFor="phone">Your order*</label> <br />
-              {(props.formErrors.userOrders) ? <span style={errorMessageStyle}>{props.formErrors.userOrders}</span> : ''}
-              <input id="userOrders" type="text" name="userOrders"/>
-            </div>
           </div>
           <Button>Submit</Button>
         </section>
