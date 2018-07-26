@@ -188,7 +188,7 @@ class CheckoutPage extends Component {
         store.getState().order.map(order => (
           <tr key={order.id}>
               <td>{order.item}</td>
-              <td><input type="number" min="1" defaultValue={order.quantity} id={order.id} onChange={updateQuantity}/></td>  
+                  <td><input type="number" style={{width: "2em"}} min="1" defaultValue={order.quantity} id={order.id} onChange={updateQuantity}/></td>  
               <td>${order.price && order.price.toFixed(2)}</td>
               <td>${order.totalPrice && order.totalPrice.toFixed(2)}</td>
               <td><button id={order.id} onClick={handleDeleteItem}>Delete</button></td>
