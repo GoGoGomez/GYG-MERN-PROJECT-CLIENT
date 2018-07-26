@@ -11,6 +11,8 @@ import { NavLink } from 'react-router-dom';
 //Form Components
 import Heat from './forms/Heat'
 import Filling from './forms/Filling'
+import Size from './forms/Size'
+
 
 
 ReactModal.setAppElement('#root')
@@ -101,10 +103,11 @@ class MenuPage extends Component {
   }
 
   handleSubmit = async event => {
+    event.persist()    
     const orderItem = {...this.state.orderItem}
     orderItem.price = orderItem.totalPrice/orderItem.quantity
     await this.setState({ orderItem: orderItem })
-    event.preventDefault();
+    // event.preventDefault();
     await store.dispatch({
       type: 'set_order_item',
       order: [...store.getState().order, this.state.orderItem]
@@ -179,7 +182,7 @@ class MenuPage extends Component {
         <p>Quantity: <input type="number" min="1" defaultValue="1" name="quantity" onChange={this.handleQuantity}/></p>
         { item.filling && <Filling setFilling={this.setFillingForItem} /> }
         { item.heat && <Heat setHeat={this.setHeatForItem} /> }
-        { item.size && <p>Hello</p> }
+        { item.size && <Size setSize={(size) => this.setSizeForItem(size, item.miniPrice, item.price)}/> }
         {/* Modifications.map */}
         {item.modifications.length !== 0 && <h4>Customise</h4>}
         <p>{item.modifications.map(modification => (
@@ -197,7 +200,7 @@ class MenuPage extends Component {
 
         {/* { this.state.orderItem.filling && this.state.orderItem.filling.includes("vegetables") && <VeggieMods /> } */}
         <p>Name: <input type="text" onChange={this.handleName}/></p>
-        <input type="submit" value="Submit"/>
+        <Button type="submit" value="Submit">Add To Order</Button>
         <Button onClick={this.handleCloseModal}>Close</Button>
         </form>
       </div>
@@ -221,6 +224,18 @@ class MenuPage extends Component {
     const orderItem = {...this.state.orderItem}
     orderItem.filling = filling
     await this.setState({ orderItem: orderItem })
+    this.handleTotalPrice()
+  }
+
+  setSizeForItem = async (size, miniPrice, price) => {
+    const orderItem = {...this.state.orderItem}
+    orderItem.size=size
+    if(size === "Mini"){
+    orderItem.price = miniPrice
+    } else {
+    orderItem.price = price
+    }
+    await this.setState({ orderItem })
     this.handleTotalPrice()
   }
 
