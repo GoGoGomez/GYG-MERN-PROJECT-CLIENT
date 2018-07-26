@@ -17,6 +17,25 @@ import Size from './forms/Size'
 
 ReactModal.setAppElement('#root')
 
+const padding = 90; // adjust this to your needs
+
+const customStyles = {
+  content: {
+    backgroundColor: "#f8d315",
+    border: "3px solid black",
+    borderRadius: "50px",
+    bottom: "auto",
+    height: "600px", // set height
+    left: "50%",
+    padding: "2rem",
+    position: "absolute",
+    right: "auto",
+    top: "25%", // start from center
+    transform: "translate(-50%,-" + "90px" + ")", // adjust top "up" based on height
+    width: "70%",
+    maxWidth: "60rem"
+  }
+};
 
 const Button = styled.button`
   border: 0;
@@ -26,11 +45,34 @@ const Button = styled.button`
   margin: 1rem 0;
   width: auto;
   text-transform: uppercase;
+`;
+
+const Img = styled.img`
+  float: left;
+`
+
+const Button2 = styled.button`
+margin: 2px;
   &:hover {
-    transform: scale(1.1);
+    border: 3px solid #f8d315;
   }
 `;
 
+const OptionsModal = styled.div`
+  background-color: white;
+  padding: 30px;
+  border-radius: 50px;
+  margin-top: 40px;
+  clear: left;
+`
+
+const ItemPrice = styled.span`
+  background-color: white;
+  text-transform: uppercase;
+  padding: 10px;
+  border-radius: 25px;
+  margin: 10px;
+`;
 
 
 class MenuPage extends Component {
@@ -47,8 +89,8 @@ class MenuPage extends Component {
     }
   }
 
-  handleTotalPrice =  async () => {
-    const orderItem = {...this.state.orderItem}
+  handleTotalPrice = async () => {
+    const orderItem = { ...this.state.orderItem }
     // let modifications = orderItem.modifications;
     // let totalPrice = orderItem.totalPrice;
     // let filling = orderItem.filling;
@@ -56,12 +98,12 @@ class MenuPage extends Component {
     let totalPrice = [orderItem.price];
 
     //filling
-    if(orderItem.filling) {
-    if(orderItem.filling.length > 0) totalPrice.push((3 * (orderItem.filling.length - 1)))
-    // orderItem.totalPrice += (3 * (orderItem.filling.length - 1))
+    if (orderItem.filling) {
+      if (orderItem.filling.length > 0) totalPrice.push((3 * (orderItem.filling.length - 1)))
+      // orderItem.totalPrice += (3 * (orderItem.filling.length - 1))
 
-    if(orderItem.filling.includes("beef") || orderItem.filling.includes("steak")) totalPrice.push(0.5)
-    // console.log('orderItem: ' + JSON.stringify(orderItem))
+      if (orderItem.filling.includes("beef") || orderItem.filling.includes("steak")) totalPrice.push(0.5)
+      // console.log('orderItem: ' + JSON.stringify(orderItem))
     }
     totalPrice.push(this.state.modPrice)
     function getSum(total, num) {
@@ -91,7 +133,7 @@ class MenuPage extends Component {
       id: orderItemId,
       item: item.title,
       price: item.price,
-      totalPrice: item.price, 
+      totalPrice: item.price,
       name: '',
       quantity: 1
     }
@@ -106,6 +148,7 @@ class MenuPage extends Component {
     event.persist()    
     const orderItem = {...this.state.orderItem}
     orderItem.price = orderItem.totalPrice/orderItem.quantity
+    
     await this.setState({ orderItem: orderItem })
     // event.preventDefault();
     await store.dispatch({
@@ -113,13 +156,13 @@ class MenuPage extends Component {
       order: [...store.getState().order, this.state.orderItem]
     })
     // store.setState().order.push(this.state.orderItem)
-    await this.setState({orderItem: {}, showModal: false })
+    await this.setState({ orderItem: {}, showModal: false })
     console.log(store.getState().order)
   }
 
   addModification = async (modification, price) => {
     const newPrice = this.state.modPrice + price
-    await this.setState({ 
+    await this.setState({
       modifications: [...this.state.modifications, modification],
       modPrice: newPrice
     })
@@ -127,13 +170,13 @@ class MenuPage extends Component {
 
   }
   removeModification = async (modification, price) => {
-      const modifications = [...this.state.modifications]
-      const newPrice = this.state.modPrice - price
+    const modifications = [...this.state.modifications]
+    const newPrice = this.state.modPrice - price
 
-      let index = modifications.indexOf(modification)
-      index > -1 && modifications.splice(index, 1)
+    let index = modifications.indexOf(modification)
+    index > -1 && modifications.splice(index, 1)
 
-      await this.setState({ modifications, modPrice: newPrice })
+    await this.setState({ modifications, modPrice: newPrice })
     console.log(this.state.modPrice)
 
   }
@@ -141,26 +184,26 @@ class MenuPage extends Component {
   handleChange = async (event) => {
     event.persist()
     let price = 0;
-    if(event.target.getAttribute('price')) {
+    if (event.target.getAttribute('price')) {
       price = parseFloat(event.target.getAttribute('price'));
     }
     const value = event.target.value
     console.log(event.target.getAttribute('price'))
 
-      if (!event.target.checked) {
-          await this.removeModification(value, price)
-      }else {
-          await this.addModification(value, price)
-          // console.log(event.target.value)
+    if (!event.target.checked) {
+      await this.removeModification(value, price)
+    } else {
+      await this.addModification(value, price)
+      // console.log(event.target.value)
 
-      }
-      
-      // await this.setPriceTest(event.target)
-       await this.setModifications(this.state.modifications)
+    }
+
+    // await this.setPriceTest(event.target)
+    await this.setModifications(this.state.modifications)
   }
 
   setModifications = async (modifications) => {
-    const orderItem = {...this.state.orderItem}
+    const orderItem = { ...this.state.orderItem }
     orderItem.modifications = modifications
     await this.setState({ orderItem: orderItem })
     this.handleTotalPrice()
@@ -172,39 +215,54 @@ class MenuPage extends Component {
     const item = this.state.items[this.state.itemid]
     let orderItemId = store.getState().order.length + 1
 
-    return (
-      <div className="ModalItem">
-        <img src={item.imagePath} />
+    return <div className="ModalItem">
+        <Img src={item.imagePath} />
         <h1>{item.title}</h1>
         <h3>{item.description}</h3>
-        {item.price && <h3>Price: ${this.state.orderItem.totalPrice.toFixed(2)}</h3>}
-        <form onSubmit={this.handleSubmit}>
-        <p>Quantity: <input type="number" min="1" defaultValue="1" name="quantity" onChange={this.handleQuantity}/></p>
-        { item.filling && <Filling setFilling={this.setFillingForItem} /> }
-        { item.heat && <Heat setHeat={this.setHeatForItem} /> }
-        { item.size && <Size setSize={(size) => this.setSizeForItem(size, item.miniPrice, item.price)}/> }
-        {/* Modifications.map */}
-        {item.modifications.length !== 0 && <h4>Customise</h4>}
-        <p>{item.modifications.map(modification => (
-          <label className="checkbox">
-          <input
-            name={modification.name}
-            price={modification.price}
-            type="checkbox"
-            value={modification.name}
-            checked={this.state.checked}
-            onChange={(e) => this.handleChange(e) }
-          />{modification.name} {modification.price && `$${(modification.price).toFixed(2)}`}
-        </label>
-        ))}</p>
+        {item.price && <h3>
+            PRICE:
+            <ItemPrice>
+              ${this.state.orderItem.totalPrice.toFixed(2)}
+            </ItemPrice>
+          </h3>}
+        <OptionsModal>
+          <form onSubmit={this.handleSubmit}>
+            <p>
+              Quantity: <input type="number" min="1" defaultValue="1" name="quantity" onChange={this.handleQuantity} />
+            </p>
+            {item.filling && <Filling setFilling={this.setFillingForItem} />}
+            {item.heat && <Heat setHeat={this.setHeatForItem} />}
+            { item.size && <Size setSize={(size) => this.setSizeForItem(size, item.miniPrice, item.price)}/> }
+            {/* Modifications.map */}
+            {item.modifications.length !== 0 && <h4>Customise</h4>}
+            <p>
+              {item.modifications.map(modification => (
+                <label className="checkbox">
+                  <input
+                    name={modification.name}
+                    price={modification.price}
+                    type="checkbox"
+                    value={modification.name}
+                    checked={this.state.checked}
+                    onChange={e => this.handleChange(e)}
+                  />
+                  {modification.name}{" "}
+                  {modification.price &&
+                    `$${modification.price.toFixed(2)}`}
+                </label>
+              ))}
+            </p>
 
-        {/* { this.state.orderItem.filling && this.state.orderItem.filling.includes("vegetables") && <VeggieMods /> } */}
-        <p>Name: <input type="text" onChange={this.handleName}/></p>
-        <Button type="submit" value="Submit">Add To Order</Button>
-        <Button onClick={this.handleCloseModal}>Close</Button>
-        </form>
-      </div>
-    )
+            {/* { this.state.orderItem.filling && this.state.orderItem.filling.includes("vegetables") && <VeggieMods /> } */}
+            <p>
+              Name: <input type="text" onChange={this.handleName} />
+            </p>
+            <Button type="submit" value="Submit">Add To Order</Button>
+            <Button onClick={this.handleCloseModal}>Close</Button>
+          </form>
+        </OptionsModal>
+      </div>;
+
     // switch (item.name) {
     //   case 'item1':
     //     return (
@@ -215,13 +273,13 @@ class MenuPage extends Component {
   }
 
   setHeatForItem = (heat) => {
-    const orderItem = {...this.state.orderItem}
-    orderItem.heat=heat
+    const orderItem = { ...this.state.orderItem }
+    orderItem.heat = heat
     this.setState({ orderItem })
   }
 
   setFillingForItem = async (filling) => {
-    const orderItem = {...this.state.orderItem}
+    const orderItem = { ...this.state.orderItem }
     orderItem.filling = filling
     await this.setState({ orderItem: orderItem })
     this.handleTotalPrice()
@@ -241,14 +299,14 @@ class MenuPage extends Component {
 
   handleName = async (event) => {
     event.persist()
-    const orderItem = {...this.state.orderItem}
+    const orderItem = { ...this.state.orderItem }
     orderItem.name = event.target.value
     await this.setState({ orderItem: orderItem })
   }
 
   handleQuantity = async (event) => {
     event.persist()
-    const orderItem = {...this.state.orderItem}
+    const orderItem = { ...this.state.orderItem }
     orderItem.quantity = parseInt(event.target.value)
     console.log(parseInt(event.target.value))
 
@@ -262,43 +320,45 @@ class MenuPage extends Component {
 
   // }
 
-  render () {
-      {if (this.state.loading) {return <Loading />}}
-      return (
+  render() {
+    { if (this.state.loading) { return <Loading /> } }
+    return (
       <div className="MenuPage">
-            {this.state.items.map((item, i) =>
-              (
-                <button onClick={() => this.handleOpenModal(i)}>
-                  <Item
-                    imagePath={item.imagePath}
-                    alt={item.title}
-                    title={item.title}
-                    category={item.category}
-                    description={item.description}
-                    options={item.options}
-                    key={item._id}
-                    id={item.category}
-                  />
-                </button>
-              )
-            )}
+        {this.state.items.map((item, i) =>
+          (
+            <Button2 onClick={() => this.handleOpenModal(i)}>
+              <Item
+                imagePath={item.imagePath}
+                alt={item.title}
+                title={item.title}
+                category={item.category}
+                description={item.description}
+                options={item.options}
+                key={item._id}
+                id={item.category}
+              />
+            </Button2>
+      
+          )
+        )}
         <ReactModal
-            isOpen={this.state.showModal}
-            contentLabel="Minimal Modal Example"
-            onRequestClose={this.handleCloseModal}
+          isOpen={this.state.showModal}
+          contentLabel="Minimal Modal Example"
+          onRequestClose={this.handleCloseModal}
+          style={customStyles}
         >
-        {this.renderModal()}
+          {this.renderModal()}
         </ReactModal><br />
-          <NavLink to="/checkout" exact={true}><Button>Checkout{store.getState() && store.getState().order.length !== 0 && `(${store.getState().order.length})`}</Button></NavLink>
-        
+        <NavLink to="/checkout" exact={true}><Button>Checkout{store.getState() && store.getState().order.length !== 0 && `(${store.getState().order.length})`}</Button></NavLink>
+
 
       </div>
-        )
+    )
   }
 
   componentDidMount() {
     this.fetchItems()
-    this.setState({loading: true})
+    this.setState({ loading: true })
     console.log(this.state.items)
   }
 

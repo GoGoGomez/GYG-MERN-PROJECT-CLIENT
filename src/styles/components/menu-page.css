@@ -1,7 +1,8 @@
 .MenuPage {
-    margin-top: 50px;
     text-align: center;
     float: center;
+    width: 80%;
+    margin: 100px auto;
 }
 
 
@@ -11,3 +12,9 @@
     text-align: center;
 
 }
+
+.my-modal {
+    width: 90vw;   /* Occupy the 90% of the screen width */
+    max-width: 90vw;
+    color: red;
+} 
