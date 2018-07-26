@@ -49,7 +49,6 @@ const userInfo = (props) => {
     color: '#cc0000'
   }
 
-  console.log('I am here')
   console.log(props.userOrders)
 
 
@@ -63,7 +62,6 @@ const userInfo = (props) => {
           <div className="form_group">
             <div>
               <label htmlFor="company">Company (optional)</label>
-              {/* <p>{}</p> */}
               <input id="company" type="text" name="company" />
             </div>
 
