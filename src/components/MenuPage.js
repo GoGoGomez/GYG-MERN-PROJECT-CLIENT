@@ -42,7 +42,7 @@ const Button = styled.button`
   background: #f8d315;
   padding: 1rem;
   color: black;
-  margin: 1rem 0;
+  margin: 10px;
   width: auto;
   text-transform: uppercase;
 `;
@@ -52,7 +52,6 @@ const Img = styled.img`
 `
 
 const Button2 = styled.button`
-margin: 2px;
   &:hover {
     border: 3px solid #f8d315;
   }

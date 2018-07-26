@@ -111,6 +111,39 @@ Git Flow
 
 We will be utilising git for our version control. We have setup two github repositories, one for the server-side and one for the client-side. Each of these repo’s have been setup for team collaboration. This was achieved by the repository owner adding collaborators with read and write access for each repository. Each team member will contribute to the project by issuing pull requests. At the end of the day, if we wish, we can send a pull request to the repository owner to merge our code changes. We will be using the fork and pull model where each collaborator forks the repository to create a clone in their own github and then clones this to their local machine. Each time we want to add a new feature we will create a branch. After making the relevant additions to build the new features, we will just commit the new changes and checkout to the git master branch. At this point, we will push the branch to the remote repository. Then we will push the changes using git push [git-remote-alias] [branch-name]. In our forked repository Github page, we will change to the branch with the new feature and then hit the "Pull Request" button. The repository owner can then merge the incoming pull requests. Each pull request will be reviewed by a different team member than the one making the request to assure that it will merge properly.
 
+Cient Satisfaction Questionnaire
+--------------------------------
+
+![14-customer.png](resources/14-customer.png)
+
+Post-Project Review
+-------------------
+
+### Challenges
+
+* Working in a team for a major project comes with challenges in itself. Dividing the project into managebale tasks and delegating those to team members proved difficult because members were more comfortable with some areas than others. We overcame this through using project management strategies such as Trello and the use of agile methodology
+* Git flow: sometimes there was a conflict when merging pull requests because people would work on the same section of code. It was difficult to resolve these conflicts at times. This cost time.
+* Deployment: Deploying to Heroku proved a challenge. The server file just wasnt deploying. From what i remember this was because one of my enviornment variables was incorrectly named. Took a couple of hours and attempts to finally get it resolved
+
+### Lessons Learned
+
+* Planning is essential:
+  * Don’t start writing code until you have a well laid out plan
+* Merging without understanding
+  * Sometimes merges were made without checking. It’s always important to look at the code before merging into master
+* git push —force: don't do it
+* Communication is key: There is no substitution for talking to team members. At times we ran into problems and attempted to fix it ourselves whichis fine, but if youre having the same problem for an hour or two its best to talk to a team member or anyone around. They can maybe help you. Or simply even talking about it will help you really understand the problem and the soltuion might suddenly come to you
+*
+
+### Project Future
+
+* login capabilities to store and retrieve orders
+* enable user to edit items and delete items
+* enable user to customise modifications
+* enable a secret code for users to enter to reduce their total price
+
+
+
 
 
 
