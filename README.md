@@ -147,6 +147,20 @@ Within the next month we hope to add the following features to the project. We w
 * enable a discount code for bulk orders 
 
 
+Project Screenshots
+--------
+
+![15-screenshot.png](resources/15-screenshot.png)
+
+![16-screenshot.png](resources/16-screenshot.png)
+
+![17-screenshot.png](resources/17-screenshot.png)
+
+![18-screenshot.png](resources/18-screenshot.png)
+
+
+
+
 
 
 
