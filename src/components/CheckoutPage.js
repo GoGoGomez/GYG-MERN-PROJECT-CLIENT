@@ -46,6 +46,69 @@ const Table = styled.table`
     }
   }
 `;
+const Button = styled.button`
+  border: 0;
+  background: #f8d315;
+  padding: 1rem;
+  color: black;
+  margin: 1rem 0;
+  width: auto;
+  float: right;
+  margin-right: 30px;
+  text-transform: uppercase;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+
+const updateQuantity = (event) => {
+  event.persist()
+  // console.log(id)
+  const id = event.target.id
+  const quantity = parseInt(event.target.value)
+  const order = store.getState().order
+  order.map(item => {
+    if(item.id == id) {
+      item.quantity = quantity
+      item.totalPrice = item.price * quantity
+    }
+  })
+  console.log(order)
+  store.dispatch({
+    type: 'update_item_quantity',
+    update: [...order]
+  })
+}
+
+const handleDeleteItem = (event) => {
+  const order = store.getState().order
+  const id = event.target.id
+  order.map(item => {
+    if(item.id == id) {
+      order.splice(item, 1)
+    }
+  })
+
+  store.dispatch({
+    type: 'delete_item',
+    delete: [...order]
+  })
+}
+
+
+const getOrderTotal = () => {
+  let orderTotal = 0
+  store.getState().order.map(order => (
+    orderTotal += order.totalPrice
+  ))
+  return orderTotal.toFixed(2)
+}
+
+const handleClearOrder = () => {
+  localStorage.removeItem("state")
+  window.history.go(0)
+}
 
 
 class CheckoutPage extends Component {
@@ -109,41 +172,35 @@ class CheckoutPage extends Component {
     return (
       <div className="CheckoutPage">
       <Title>YOUR ORDER</Title>
-      <Table>
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Qty</th>
-          <th>Price</th>
-          <th>Total</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Enchilads(mild)</td>
-          <td><input type="number" min="1" name="quantity"/></td>
-          <td>price</td>
-          <td>15</td>
-          <td><button>Delete</button></td>
-        </tr>
-        {
-          store.getState().order.map(order => (
-            <tr key={order.id}>
-                <td>{order.item}</td>
-                <td><input type="number" min="1" name="quantity"/></td>  
-                <td>{order.price}</td>
-                <td></td>
-                <td><button>Delete</button></td>
-            </tr>
-            ))
-          }
-        <tr>
-          <td colSpan="3">Order Total</td>
-          <td>20.00</td>
-        </tr>
-      </tbody>
-      </Table>
+    <Button onClick={handleClearOrder}>Clear Order</Button>
+    <Table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Total</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        store.getState().order.map(order => (
+          <tr key={order.id}>
+              <td>{order.item}</td>
+              <td><input type="number" min="1" defaultValue={order.quantity} id={order.id} onChange={updateQuantity}/></td>  
+              <td>${order.price && order.price.toFixed(2)}</td>
+              <td>${order.totalPrice && order.totalPrice.toFixed(2)}</td>
+              <td><button id={order.id} onClick={handleDeleteItem}>Delete</button></td>
+          </tr>
+          ))
+        }
+      <tr>
+        <td colSpan="3">Order Total</td>
+        <td>${getOrderTotal()}</td>
+      </tr>
+    </tbody>
+    </Table>
   
       <UserInfo
         onClick={this.clickHandler} 
@@ -155,21 +212,4 @@ class CheckoutPage extends Component {
 
 }
 
-// const CheckoutPage = () => (
- 
-// );
-
 export default CheckoutPage;
-
-// Enchiladas(Mild) 15
-
-// {
-//   // console.log(store.getState().order, 'this is working')
-//   <ol>
-//     {store.getState().order.map(order => (
-//       <li>
-//         {order.item}({order.heat}) {order.price}{" "}
-//       </li>
-//     ))}
-//   </ol>
-// }
