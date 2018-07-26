@@ -137,44 +137,42 @@ class CheckoutPage extends Component {
       }
     }
 
-    const order = store.getState().order.map(orderItem =>  {
-      let userOrders = `
-        <p><strong>Item order</strong>: ${orderItem.id} </p>
-        <p><strong>Item</strong>: ${orderItem.item} </p>
+    console.log(store.getState().order)
+
+    let userOrders = ``
+    const order = store.getState().order.map((orderItem, index) => {
+      if (orderItem.name) {
+        userOrders += `<p><strong>Customer name</strong>: ${orderItem.name}</p>`
+      }
+
+      userOrders += `
+        <p><strong>Item ${index + 1}</strong>: ${orderItem.item} </p>
         <p><strong>Quanity</strong>: ${orderItem.quantity} </p>
-      `
+      `  
 
-      if (orderItem.item) {
-        userOrders += `<p><strong>Size</strong>: ${orderItem.size}</p>`
+      if (orderItem.size) {
+        userOrders += `
+        <p><strong>Size</strong>: ${orderItem.size}</p>
+        `
       }
-
       if (orderItem.heat) {
-        userOrders += `<p><strong>Heat</strong>: ${orderItem.heat}</p>`
+        userOrders += `
+        <p><strong>Heat</strong>: ${orderItem.heat}</p>
+        `
       }
 
-      if (orderItem.filling.length > 0) {
-          userOrders += `<p><strong>Fillings:</strong></p>`
-          userOrders += '<ul>'
-          orderItem.modifications.forEach((item) => {
-              userOrders += `<li><strong>Size</strong>: ${item}</li>`
-            })
-            userOrders += '</ul>'
-          }
-          
-          if (orderItem.modifications) {
-            console.log(orderItem.filling)
-        userOrders += `<p><strong>Modifications:</strong></p>`
-        userOrders += '<ul>'
-        orderItem.modifications.forEach((item) => {
-          userOrders += `<li> ${item}</li>`
-        })
-        userOrders += '</ul>'
-        userOrders += `<h4Total: $${getOrderTotal()}</h4>`
-        return userOrders
+      if (orderItem.modifications.length > 0) {
+        console.log('ther are fillings')
+        userOrders += `
+          <p><strong>Fillings</strong>: ${orderItem.modifications.join(', ')}</p>
+          `
       }
+
+      userOrders += `<p><strong>Total price</strong>: $${getOrderTotal()} </p>`
+      
+      return userOrders
     })
-
-    console.log(order)
+    
 
     console.log('Posting to API ...')
     // if (event.keyCode == 13 || ) {
@@ -191,6 +189,7 @@ class CheckoutPage extends Component {
       }, config)
       .then(res => console.log(res))
       .catch(inputErrors => {
+        console.log(inputErrors.response.data)
         this.setState({
           inputErrors: {
             firstName: inputErrors.response.data.firstName, 
@@ -200,7 +199,7 @@ class CheckoutPage extends Component {
             email: inputErrors.response.data.email, 
             phoneNumber: inputErrors.response.data.phoneNumber,  
             city: inputErrors.response.data.city,  
-            company: inputErrors.response.data.company, 
+            userOrders:  inputErrors.response.data.userOrders
           }
         })
       })

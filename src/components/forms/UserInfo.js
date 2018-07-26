@@ -49,7 +49,6 @@ const userInfo = (props) => {
     color: '#cc0000'
   }
 
-  console.log('I am here')
   console.log(props.userOrders)
 
 
@@ -63,7 +62,6 @@ const userInfo = (props) => {
           <div className="form_group">
             <div>
               <label htmlFor="company">Company (optional)</label>
-              {/* <p>{}</p> */}
               <input id="company" type="text" name="company" />
             </div>
 
@@ -117,6 +115,12 @@ const userInfo = (props) => {
               <label htmlFor="phone">Phone number*</label> <br />
               {(props.formErrors.phoneNumber) ? <span style={errorMessageStyle}>{props.formErrors.phoneNumber}</span> : ''}
               <input id="phoneNumber" type="text" name="phoneNumber" />
+            </div>
+
+            <div>
+              <label htmlFor="phone">Your order*</label> <br />
+              {(props.formErrors.userOrders) ? <span style={errorMessageStyle}>{props.formErrors.userOrders}</span> : ''}
+              <input id="userOrders" type="text" name="userOrders"/>
             </div>
           </div>
           <Button>Submit</Button>
