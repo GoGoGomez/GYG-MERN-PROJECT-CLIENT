@@ -79,10 +79,42 @@ ERD
 ---------------------------------
 ![9-erd.png](resources/9-erd.png)
 
-Project Plan and EffortEstimation
+Project Plan and Effort Estimation
 ---------------------------------
 
 ![10-gantt.png](resources/10-gantt.png)
+
+Team Management
+---------------
+
+Nic: Front-end development, MenuPage, Redux
+
+Ian: Testing, React Router, Styling, Checkout-Page, API integration
+
+Denis: Back-end development, autheniticaiton, passport, email
+
+Work was monitored with trello. It was useful for monitoring tasks
+
+![11-trello.png](resources/11-trello.png)
+
+Monitoring Each Others Work
+---------------------------
+
+Pull requested were reviewed before merging into master
+
+![12-github.png](resources/12-github.png)
+
+Git Flow
+--------
+
+![13-git-flow.png](resources/13-git-flow.png)
+
+We will be utilising git for our version control. We have setup two github repositories, one for the server-side and one for the client-side. Each of these repo’s have been setup for team collaboration. This was achieved by the repository owner adding collaborators with read and write access for each repository. Each team member will contribute to the project by issuing pull requests. At the end of the day, if we wish, we can send a pull request to the repository owner to merge our code changes. We will be using the fork and pull model where each collaborator forks the repository to create a clone in their own github and then clones this to their local machine. Each time we want to add a new feature we will create a branch. After making the relevant additions to build the new features, we will just commit the new changes and checkout to the git master branch. At this point, we will push the branch to the remote repository. Then we will push the changes using git push [git-remote-alias] [branch-name]. In our forked repository Github page, we will change to the branch with the new feature and then hit the "Pull Request" button. The repository owner can then merge the incoming pull requests. Each pull request will be reviewed by a different team member than the one making the request to assure that it will merge properly.
+
+
+
+
+
 
 
 
