@@ -183,12 +183,11 @@ class CheckoutPage extends Component {
       userOrderArray.push(userOrders)
       return userOrders
     })
+
     userOrderArray.push(`<p><strong>Total price</strong>: $${getOrderTotal()} </p>`)
 
     const finalOrder = userOrderArray.toString()
     console.log(finalOrder)
-
-    
 
     console.log('Posting to API ...')
     // if (event.keyCode == 13 || ) {
