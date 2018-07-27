@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import store from '../../store'
+// import { Route, Redirect } from 'react-router'
+
 
 
 const Title = styled.h1`
@@ -117,6 +119,7 @@ const userInfo = (props) => {
               <input id="phoneNumber" type="text" name="phoneNumber" />
             </div>
           </div>
+    
           <Button>Submit</Button>
         </section>
       </Form>
