@@ -3,6 +3,8 @@ import store from '../store'
 import styled from "styled-components";
 import UserInfo from './forms/UserInfo'
 import api from '../api/init'
+// import { Route, Redirect } from 'react-router'
+
 
 const Title = styled.h1`
   font-size: 2.5em;
@@ -130,7 +132,7 @@ class CheckoutPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    
+    this.props.history.push('/complete');
     const config = {
       headers: {
       'Content-Type': 'application/json',
@@ -152,7 +154,7 @@ class CheckoutPage extends Component {
         userOrders += `<p><strong>Heat</strong>: ${orderItem.heat}</p>`
       }
 
-      if (orderItem.filling.length > 0) {
+      if (orderItem.filling && orderItem.filling.length > 0) {
           userOrders += `<p><strong>Fillings:</strong></p>`
           userOrders += '<ul>'
           orderItem.modifications.forEach((item) => {
